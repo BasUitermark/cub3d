@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/01 14:47:14 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/01 15:29:05 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include <stdbool.h>
+
+# include "libft.h"
 
 typedef struct s_ipos
 {
@@ -45,6 +48,10 @@ typedef struct s_cub3d
 	t_map	map;
 }			t_cub3d;
 
+// cleanup.c
+int		cleanup(t_cub3d *cub3d, int exit_code);
+
 // map.c
+bool	parse_map(t_cub3d *cub3d, const char *map);
 
 #endif
