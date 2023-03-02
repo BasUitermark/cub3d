@@ -1,3 +1,4 @@
 cub3d
 src/*.o
 tmp/
+.vscode
