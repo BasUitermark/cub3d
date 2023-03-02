@@ -1,0 +1,84 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   map_validating.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/03/02 18:28:19 by jde-groo      #+#    #+#                 */
+/*   Updated: 2023/03/02 18:57:49 by jde-groo      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+static bool	check_players(t_cub3d *cub3d)
+{
+	int		x;
+	int		y;
+
+	y = 0;
+	while (cub3d->map.map[y])
+	{
+		x = 0;
+		while (cub3d->map.map[y][x])
+		{
+			if (ft_strchr("NESW", cub3d->map.map[y][x]))
+			{
+				if (cub3d->player.x == 0 || cub3d->player.y == 0)
+				{
+					cub3d->player.x = x;
+					cub3d->player.y = y;
+				}
+				else
+					return (false);
+			}
+			x++;
+		}
+		y++;
+	}
+	return (cub3d->player.x != 0 && cub3d->player.y != 0);
+}
+
+static bool	cnb(t_cub3d *cub3d, int x, int y, const char *illegal)
+{
+	if (ft_strchr(illegal, cub3d->map.map[y + 1][x]))
+		return (false);
+	if (ft_strchr(illegal, cub3d->map.map[y][x + 1]))
+		return (false);
+	return (true);
+}
+
+static bool	check_structure(t_cub3d *cub3d)
+{
+	int		y;
+	int		x;
+
+	y = 0;
+	while (y < cub3d->map.dimensions.y - 1)
+	{
+		x = 0;
+		while (x < cub3d->map.dimensions.x - 1)
+		{
+			if ((cub3d->map.map[y][x] == ' ' && !cnb(cub3d, x, y, "0NESW")) || \
+				(cub3d->map.map[y][x] == '0' && !cnb(cub3d, x, y, " ")) || \
+				(cub3d->map.map[y][x] == 'N' && !cnb(cub3d, x, y, " ")) || \
+				(cub3d->map.map[y][x] == 'E' && !cnb(cub3d, x, y, " ")) || \
+				(cub3d->map.map[y][x] == 'S' && !cnb(cub3d, x, y, " ")) || \
+				(cub3d->map.map[y][x] == 'W' && !cnb(cub3d, x, y, " ")))
+				return (false);
+			x++;
+		}
+		y++;
+	}
+	return (true);
+}
+
+bool	validate_map(t_cub3d *cub3d)
+{
+	if (!check_players(cub3d))
+		return (perr("invalid amount of players", false));
+	if (!check_structure(cub3d))
+		return (perr("illegal map", false));
+	return (true);
+}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   map.c                                              :+:    :+:            */
+/*   utility_map.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/03/01 14:45:58 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/01 16:28:53 by jde-groo      ########   odam.nl         */
+/*   Created: 2023/03/02 15:44:10 by jde-groo      #+#    #+#                 */
+/*   Updated: 2023/03/02 15:44:34 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*join_free(char *s1, char *s2)
 	return (s3);
 }
 
-static char	**read_map(const char *map)
+char	**read_map(const char *map)
 {
 	char	buffer[32];
 	char	*raw;
@@ -46,17 +46,4 @@ static char	**read_map(const char *map)
 	ret = ft_split(raw, '\n');
 	free(raw);
 	return (ret);
-}
-
-bool	parse_map(t_cub3d *cub3d, const char *map)
-{
-	char	**raw_map;
-
-	if (ft_strlen(map) < 5 || ft_strncmp(&map[ft_strlen(map) - 4], ".cub", 4))
-		return (write(2, "invalid file name\n", 18) & false);
-	raw_map = read_map(map);
-	if (!raw_map)
-		return (write(2, "failed reading map\n", 19) & false);
-	(void)cub3d;
-	return (true);
 }
