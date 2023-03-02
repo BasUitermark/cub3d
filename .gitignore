@@ -3,3 +3,4 @@ src/*.o
 tmp/
 .vscode
 textures/
+*.cub
