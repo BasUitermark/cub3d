@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:13:45 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 12:40:08 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/03 14:46:42 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ bool	setup(t_cub3d *cub3d)
 	cub3d->background = mlx_new_image(cub3d->mlx, WIDTH, HEIGHT);
 	if (!cub3d->background)
 		return (perr("failed creating background image", false));
+	cub3d->foreground = mlx_new_image(cub3d->mlx, WIDTH, HEIGHT);
+	if (!cub3d->foreground)
+		return (perr("failed creating foreground image", false));
 	set_background(cub3d->background, &cub3d->map);
 	return (true);
 }

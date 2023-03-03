@@ -6,11 +6,24 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:28:19 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 12:03:41 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/03 16:02:16 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	set_player_direction(t_map *map, t_player *player, t_ipos *pos)
+{
+	player->location.x = (double)pos->x;
+	player->location.y = (double)pos->y;
+	player->direction.x = -1.0; // kifesh? (south)
+	player->direction.y = 0.0;
+	/*
+	 * hoe de neuk werkt deze ding?
+	 * ik weet niet
+	 */
+	map->map[pos->y][pos->x] = '0';
+}
 
 static bool	check_players(t_cub3d *cub3d)
 {
@@ -26,11 +39,7 @@ static bool	check_players(t_cub3d *cub3d)
 			{
 				if (cub3d->player.location.x == (double)0 || \
 					cub3d->player.location.y == (double)0)
-				{
-					cub3d->player.location.x = (double)pos.x;
-					cub3d->player.location.y = (double)pos.y;
-					cub3d->map.map[pos.y][pos.x] = '0';
-				}
+					set_player_direction(&cub3d->map, &cub3d->player, &pos);
 				else
 					return (false);
 			}

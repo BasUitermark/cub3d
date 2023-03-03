@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 12:14:00 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/03 14:40:14 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct s_dpos
 
 typedef struct s_player
 {
-	t_dpos			direction;
 	t_dpos			location;
+	t_dpos			direction;
 }					t_player;
 
 typedef struct s_map
@@ -60,6 +60,7 @@ typedef struct s_cub3d
 	mlx_t			*mlx;
 	mlx_texture_t	*textures[4];
 	mlx_image_t		*background;
+	mlx_image_t		*foreground;
 	t_player		player;
 }					t_cub3d;
 

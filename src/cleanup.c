@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 15:11:51 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 12:37:48 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/03 14:46:58 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static void	free_images(t_cub3d *cub3d)
 {
 	if (cub3d->background)
 		mlx_delete_image(cub3d->mlx, cub3d->background);
+	if (cub3d->foreground)
+		mlx_delete_image(cub3d->mlx, cub3d->foreground);
 }
 
 int	cleanup(t_cub3d *cub3d, int exit_code)
