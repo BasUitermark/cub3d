@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/02 18:39:55 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/03 12:26:09 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@
 #include "cub3d.h"
 #include "libft.h"
 
+void hook(void *param)
+{
+	mlx_t* mlx = param;
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
+}
+
 static void	debug(t_cub3d *cub3d)
 {
 	printf("texture 0  : '%s'\n", cub3d->map.textures[0]);
@@ -77,6 +84,10 @@ static void	debug(t_cub3d *cub3d)
 	for (int i = 0; i < cub3d->map.dimensions.x + 2; i++)
 		printf("-");
 	printf("\n");
+
+	mlx_image_to_window(cub3d->mlx, cub3d->background, 0, 0);
+	mlx_loop_hook(cub3d->mlx, &hook, cub3d->mlx);
+	mlx_loop(cub3d->mlx);
 }
 
 int	main(const int argc, const char *argv[])
@@ -86,13 +97,11 @@ int	main(const int argc, const char *argv[])
 	ft_memset(&cub3d, 0, sizeof(t_cub3d));
 	if (argc != 2)
 		return ((printf("usage: ./cub3d <map>\n") & 0) | EXIT_FAILURE);
-	if (!parse_map(&cub3d, argv[1]))
+	if (!parse_map(&cub3d, argv[1]) || \
+		!validate_map(&cub3d) || \
+		!load_textures(&cub3d) || \
+		!setup(&cub3d))
 		return (cleanup(&cub3d, EXIT_FAILURE));
-	if (!validate_map(&cub3d))
-		return (cleanup(&cub3d, EXIT_FAILURE));
-	// cub3d.mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
-	// if (!cub3d.mlx)
-	// 	return (cleanup(&cub3d, EXIT_FAILURE));
 	debug(&cub3d);
 	return (cleanup(&cub3d, EXIT_SUCCESS));
 }

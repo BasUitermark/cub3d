@@ -9,6 +9,8 @@ SRC =	./src/main.c \
 		./src/map_parsing.c \
 		./src/map_validating.c \
 		./src/error.c \
+		./src/textures.c \
+		./src/graphics_setup.c \
 		./src/utility_array.c \
 		./src/utility_map.c
 

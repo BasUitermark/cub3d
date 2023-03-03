@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:28:19 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/02 18:57:49 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/03 12:03:41 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,31 @@
 
 static bool	check_players(t_cub3d *cub3d)
 {
-	int		x;
-	int		y;
+	t_ipos	pos;
 
-	y = 0;
-	while (cub3d->map.map[y])
+	pos.y = 0;
+	while (cub3d->map.map[pos.y])
 	{
-		x = 0;
-		while (cub3d->map.map[y][x])
+		pos.x = 0;
+		while (cub3d->map.map[pos.y][pos.x])
 		{
-			if (ft_strchr("NESW", cub3d->map.map[y][x]))
+			if (ft_strchr("NESW", cub3d->map.map[pos.y][pos.x]))
 			{
-				if (cub3d->player.x == 0 || cub3d->player.y == 0)
+				if (cub3d->player.location.x == (double)0 || \
+					cub3d->player.location.y == (double)0)
 				{
-					cub3d->player.x = x;
-					cub3d->player.y = y;
+					cub3d->player.location.x = (double)pos.x;
+					cub3d->player.location.y = (double)pos.y;
+					cub3d->map.map[pos.y][pos.x] = '0';
 				}
 				else
 					return (false);
 			}
-			x++;
+			pos.x++;
 		}
-		y++;
+		pos.y++;
 	}
-	return (cub3d->player.x != 0 && cub3d->player.y != 0);
+	return (cub3d->player.location.x != 0 && cub3d->player.location.y != 0);
 }
 
 static bool	cnb(t_cub3d *cub3d, int x, int y, const char *illegal)

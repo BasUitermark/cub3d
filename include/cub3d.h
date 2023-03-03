@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/02 18:33:12 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/03 12:14:00 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,40 @@
 
 typedef struct s_ipos
 {
-	int		x;
-	int		y;
-}			t_ipos;
+	int				x;
+	int				y;
+}					t_ipos;
 
 typedef struct s_dpos
 {
-	double	x;
-	double	y;
-}			t_dpos;
+	double			x;
+	double			y;
+}					t_dpos;
+
+typedef struct s_player
+{
+	t_dpos			direction;
+	t_dpos			location;
+}					t_player;
 
 typedef struct s_map
 {
-	t_ipos	dimensions;
-	char	**raw_map;
-	char	**map;
-	char	*textures[4];
-	int		ceiling;
-	int		floor;
-}			t_map;
+	t_ipos			dimensions;
+	char			**raw_map;
+	char			**map;
+	char			*textures[4];
+	int				ceiling;
+	int				floor;
+}					t_map;
 
 typedef struct s_cub3d
 {
-	t_map	map;
-	mlx_t	*mlx;
-	t_ipos	player;
-}			t_cub3d;
+	t_map			map;
+	mlx_t			*mlx;
+	mlx_texture_t	*textures[4];
+	mlx_image_t		*background;
+	t_player		player;
+}					t_cub3d;
 
 // error.c
 int		perr(const char *error, int ret);
@@ -73,5 +81,11 @@ bool	parse_map(t_cub3d *cub3d, const char *map);
 
 // map_validating.c
 bool	validate_map(t_cub3d *cub3d);
+
+// textures.c
+bool	load_textures(t_cub3d *cub3d);
+
+// graphics_setup.c
+bool	setup(t_cub3d *cub3d);
 
 #endif
