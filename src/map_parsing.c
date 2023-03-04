@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:45:58 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/02 18:28:47 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/04 10:38:17 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,18 +147,18 @@ static bool	parse_map_frfr(t_map *map)
 bool	parse_map(t_cub3d *cub3d, const char *map)
 {
 	if (ft_strlen(map) < 5 || ft_strncmp(&map[ft_strlen(map) - 4], ".cub", 4))
-		return (perr("invalid filename", false));
+		return (perr(BOLD "\tInvalid filename\n" RESET, false));
 	cub3d->map.raw_map = read_map(map);
 	if (!cub3d->map.raw_map)
-		return (perr("failed reading map", false));
+		return (perr(BOLD "\tFailed reading map\n" RESET, false));
 	if (!parse_color(&cub3d->map.floor, parse_element(cub3d, "F")) || \
 		!parse_color(&cub3d->map.ceiling, parse_element(cub3d, "C")))
-		return (perr("failed parsing colors", false));
+		return (perr(BOLD "\tFailed parsing colors\n" RESET, false));
 	cub3d->map.textures[0] = parse_element(cub3d, "NO");
 	cub3d->map.textures[1] = parse_element(cub3d, "EA");
 	cub3d->map.textures[2] = parse_element(cub3d, "SO");
 	cub3d->map.textures[3] = parse_element(cub3d, "WE");
 	if (!parse_map_frfr(&cub3d->map))
-		return (perr("failed parsing map", false));
+		return (perr(BOLD "\tFailed parsing map\n" RESET, false));
 	return (true);
 }

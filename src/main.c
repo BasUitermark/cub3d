@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 16:04:07 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/04 13:05:53 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@
 // }
 
 #include "cub3d.h"
-#include "libft.h"
 
 
 static double		planeX		= 0;
@@ -171,6 +170,20 @@ void	test(t_cub3d *cub3d)
 	}
 }
 
+static bool is_valid_location(double x, double y, t_ipos dimensions)
+{
+	printf(GREEN "X pos: %f\n" RESET, x);
+	printf(GREEN "Y pos: %f\n" RESET, y);
+	(void)dimensions;
+	if (x - movSpeed < 1 || y - movSpeed < 1 || x + movSpeed > dimensions.x - 1|| y + movSpeed > dimensions.y - 1)
+	{
+		printf(RED "X pos: %f\n" RESET, x);
+		printf(RED "Y pos: %f\n" RESET, y);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
 void	hook(void *param)
 {
 	t_cub3d		*cub3d;
@@ -180,7 +193,7 @@ void	hook(void *param)
 	player = &cub3d->player;
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub3d->mlx);
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_LEFT) || mlx_is_key_down(cub3d->mlx, MLX_KEY_A))
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = player->direction.x;
@@ -190,7 +203,7 @@ void	hook(void *param)
 		planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
 		planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
 	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT) || mlx_is_key_down(cub3d->mlx, MLX_KEY_D))
 	{
       //both camera direction and camera plane must be rotated
       double oldDirX = player->direction.x;
@@ -200,15 +213,26 @@ void	hook(void *param)
       planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
       planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
 	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_UP))
+	// printf("player loc x: %f\n", player->location.x);
+	// printf("player loc y: %f\n", player->location.y);
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_UP) || mlx_is_key_down(cub3d->mlx, MLX_KEY_W))
 	{
-		player->location.x += player->direction.x * movSpeed;
-		player->location.y += player->direction.y * movSpeed;
+		if (is_valid_location(player->location.x + player->direction.x * movSpeed, player->location.y + player->direction.y * movSpeed, cub3d->map.dimensions))
+		{
+			player->location.x += player->direction.x * movSpeed;
+			player->location.y += player->direction.y * movSpeed;
+		}
+
 	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_DOWN) || mlx_is_key_down(cub3d->mlx, MLX_KEY_S))
 	{
-		player->location.x -= player->direction.x * movSpeed;
-		player->location.y -= player->direction.y * movSpeed;
+		// printf("player dir x: %f\n", player->location.x);
+		// printf("player dir y: %f\n", player->location.y);
+		if (is_valid_location(player->location.x - player->direction.x * movSpeed, player->location.y - player->direction.y * movSpeed, cub3d->map.dimensions))
+		{
+			player->location.x -= player->direction.x * movSpeed;
+			player->location.y -= player->direction.y * movSpeed;
+		}
 	}
 	// printf("player dir x: %f\n", player->direction.x);
 	// printf("player dir y: %f\n", player->direction.y);
@@ -249,7 +273,8 @@ int	main(const int argc, const char *argv[])
 
 	ft_memset(&cub3d, 0, sizeof(t_cub3d));
 	if (argc != 2)
-		return ((printf("usage: ./cub3d <map>\n") & 0) | EXIT_FAILURE);
+		return ((printf( BOLD "usage: ./cub3d <map>\n" RESET) & 0) | EXIT_FAILURE);
+	printf("%s\n", argv[1]);
 	if (!parse_map(&cub3d, argv[1]) || \
 		!validate_map(&cub3d) || \
 		!load_textures(&cub3d) || \

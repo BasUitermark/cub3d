@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 14:40:14 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/04 11:34:12 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <math.h>
 # include <stdbool.h>
 
-# include "libft.h"
+# include "../libs/libft/include/libft.h"
 # include "MLX42/MLX42.h"
 
 # define WIDTH 	854
