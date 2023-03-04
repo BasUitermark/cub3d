@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 13:11:20 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/04 14:45:03 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include "../libs/libft/include/libft.h"
 # include "../libs/MLX42/include/MLX42/MLX42.h"
 
-# define WIDTH 	854
-# define HEIGHT 480
+# define WIDTH 	1920
+# define HEIGHT 1080
 
 typedef struct s_ipos
 {
@@ -42,6 +42,7 @@ typedef struct s_player
 {
 	t_dpos			location;
 	t_dpos			direction;
+	t_ipos			mouse;
 }					t_player;
 
 typedef struct s_map

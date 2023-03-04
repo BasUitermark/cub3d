@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:28:19 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 16:02:16 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/04 16:21:51 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	set_player_direction(t_map *map, t_player *player, t_ipos *pos)
 	/*
 	 * hoe de neuk werkt deze ding?
 	 * ik weet niet
+	 * same tho
 	 */
 	map->map[pos->y][pos->x] = '0';
 }

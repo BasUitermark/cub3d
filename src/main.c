@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 14:11:02 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/04 16:27:04 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	test(t_cub3d *cub3d)
 		double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
 		double perpWallDist;
 
-      //what direction to step in x or y-direction (either +1 or -1)
+	  //what direction to step in x or y-direction (either +1 or -1)
 		int stepX;
 		int stepY;
 		int hit = 0; //was there a wall hit?
@@ -187,7 +187,7 @@ static bool is_valid_location(double x, double y, t_ipos dimensions)
 	return (FALSE);
 }
 
-void	hook(void *param)
+void	move(void *param)
 {
 	t_cub3d		*cub3d;
 	t_player	*player;
@@ -196,7 +196,68 @@ void	hook(void *param)
 	player = &cub3d->player;
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub3d->mlx);
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_LEFT) || mlx_is_key_down(cub3d->mlx, MLX_KEY_A))
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_W))
+	{
+		//check if next player position is over map bounds
+		if (is_valid_location(player->location.x + player->direction.x * movSpeed, 0, cub3d->map.dimensions))
+			player->location.x += player->direction.x * movSpeed;
+		if (is_valid_location(0, player->location.y + player->direction.y * movSpeed, cub3d->map.dimensions))
+			player->location.y += player->direction.y * movSpeed;
+
+	}
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_S))
+	{
+		//check if next player position is over map bounds
+		if (is_valid_location(player->location.x - player->direction.x * movSpeed, 0, cub3d->map.dimensions))
+			player->location.x -= player->direction.x * movSpeed;
+		if (is_valid_location(0, player->location.y - player->direction.y * movSpeed, cub3d->map.dimensions))
+			player->location.y -= player->direction.y * movSpeed;
+	}
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_A))
+	{
+		printf("player dir x: %f\n", player->direction.x);
+		printf("player dir y: %f\n", player->direction.y);
+		printf("player loc x: %f\n", player->location.x);
+		printf("player loc y: %f\n", player->location.y);
+		//check if next player position is over map bounds
+		if (is_valid_location(player->location.x + -player->direction.y * movSpeed, 0, cub3d->map.dimensions))
+			player->location.x += -player->direction.y * movSpeed;
+		if (is_valid_location(0, player->location.y + player->direction.x * movSpeed, cub3d->map.dimensions))
+			player->location.y += player->direction.x * movSpeed;
+
+	}
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_D))
+	{
+		printf("player dir x: %f\n", player->direction.x);
+		printf("player dir y: %f\n", player->direction.y);
+		printf("player loc x: %f\n", player->location.x);
+		printf("player loc y: %f\n", player->location.y);
+		//check if next player position is over map bounds
+		if (is_valid_location(player->location.x + player->direction.y * movSpeed, 0, cub3d->map.dimensions))
+			player->location.x += player->direction.y * movSpeed;
+		if (is_valid_location(0, player->location.y + -player->direction.x * movSpeed, cub3d->map.dimensions))
+			player->location.y += -player->direction.x * movSpeed;
+	}
+	test(cub3d);
+}
+
+void	pan(void *param)
+{
+	t_cub3d		*cub3d;
+	t_player	*player;
+	int			cur_x;
+	int			cur_y;
+
+	cub3d = (t_cub3d *)param;
+	player = &cub3d->player;
+
+	mlx_get_mouse_pos(cub3d->mlx, &cur_x, &cur_y);
+	mlx_set_cursor_mode(cub3d->mlx, 0x00034002);
+
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(cub3d->mlx);
+	//left and right key
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_LEFT))
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = player->direction.x;
@@ -206,36 +267,46 @@ void	hook(void *param)
 		planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
 		planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
 	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT) || mlx_is_key_down(cub3d->mlx, MLX_KEY_D))
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT))
 	{
-      //both camera direction and camera plane must be rotated
-      double oldDirX = player->direction.x;
-      player->direction.x = player->direction.x * cos(-rotSpeed) - player->direction.y * sin(-rotSpeed);
-      player->direction.y = oldDirX * sin(-rotSpeed) + player->direction.y * cos(-rotSpeed);
-      double oldPlaneX = planeX;
-      planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-      planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
+	  //both camera direction and camera plane must be rotated
+	  double oldDirX = player->direction.x;
+	  player->direction.x = player->direction.x * cos(-rotSpeed) - player->direction.y * sin(-rotSpeed);
+	  player->direction.y = oldDirX * sin(-rotSpeed) + player->direction.y * cos(-rotSpeed);
+	  double oldPlaneX = planeX;
+	  planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
+	  planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
 	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_UP) || mlx_is_key_down(cub3d->mlx, MLX_KEY_W))
+	//mouse movement
+	// only track if mouse is being moved
+	if (cur_x != player->mouse.x)
 	{
-		//check if next player position is over map bounds
-		if (is_valid_location(player->location.x + player->direction.x * movSpeed, 0, cub3d->map.dimensions))
-			player->location.x += player->direction.x * movSpeed;
-		if (is_valid_location(0, player->location.y + player->direction.y * movSpeed, cub3d->map.dimensions))
-			player->location.y += player->direction.y * movSpeed;
-
+		if (cur_x < player->mouse.x)
+		{
+			//both camera direction and camera plane must be rotated
+			double oldDirX = player->direction.x;
+			player->direction.x = player->direction.x * cos(rotSpeed) - player->direction.y * sin(rotSpeed);
+			player->direction.y = oldDirX * sin(rotSpeed) + player->direction.y * cos(rotSpeed);
+			double oldPlaneX = planeX;
+			planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
+			planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+		}
+		else if (cur_x > player->mouse.x)
+		{
+			//both camera direction and camera plane must be rotated
+			double oldDirX = player->direction.x;
+			player->direction.x = player->direction.x * cos(-rotSpeed) - player->direction.y * sin(-rotSpeed);
+			player->direction.y = oldDirX * sin(-rotSpeed) + player->direction.y * cos(-rotSpeed);
+			double oldPlaneX = planeX;
+			planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
+			planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
+		}
 	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_DOWN) || mlx_is_key_down(cub3d->mlx, MLX_KEY_S))
-	{
-		//check if next player position is over map bounds
-		if (is_valid_location(player->location.x - player->direction.x * movSpeed, 0, cub3d->map.dimensions))
-			player->location.x -= player->direction.x * movSpeed;
-		if (is_valid_location(0, player->location.y - player->direction.y * movSpeed, cub3d->map.dimensions))
-			player->location.y -= player->direction.y * movSpeed;
-	}
-	// printf("player dir x: %f\n", player->direction.x);
-	// printf("player dir y: %f\n", player->direction.y);
-	test(cub3d);
+	mlx_set_mouse_pos(cub3d->mlx, WIDTH/2, HEIGHT/2);
+	// test(cub3d);
+	//reset mouse back to center
+	cur_x = WIDTH/2;
+	player->mouse.x = cur_x;
 }
 
 static void	debug(t_cub3d *cub3d)
@@ -262,7 +333,8 @@ static void	debug(t_cub3d *cub3d)
 
 	mlx_image_to_window(cub3d->mlx, cub3d->background, 0, 0);
 	mlx_image_to_window(cub3d->mlx, cub3d->foreground, 0, 0);
-	mlx_loop_hook(cub3d->mlx, &hook, cub3d);
+	mlx_loop_hook(cub3d->mlx, &move, cub3d);
+	mlx_loop_hook(cub3d->mlx, &pan, cub3d);
 	mlx_loop(cub3d->mlx);
 }
 
