@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 13:05:53 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/04 14:11:02 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,16 +172,19 @@ void	test(t_cub3d *cub3d)
 
 static bool is_valid_location(double x, double y, t_ipos dimensions)
 {
-	printf(GREEN "X pos: %f\n" RESET, x);
-	printf(GREEN "Y pos: %f\n" RESET, y);
-	(void)dimensions;
-	if (x - movSpeed < 1 || y - movSpeed < 1 || x + movSpeed > dimensions.x - 1|| y + movSpeed > dimensions.y - 1)
+	if (x)
 	{
-		printf(RED "X pos: %f\n" RESET, x);
-		printf(RED "Y pos: %f\n" RESET, y);
-		return (FALSE);
+		if (x - movSpeed < 1 || x + movSpeed > dimensions.x - 1)
+			return (FALSE);
+		return (TRUE);
 	}
-	return (TRUE);
+	else if (y)
+	{
+		if (y - movSpeed < 1 || y + movSpeed > dimensions.y - 1)
+			return (FALSE);
+		return (TRUE);
+	}
+	return (FALSE);
 }
 
 void	hook(void *param)
@@ -213,26 +216,22 @@ void	hook(void *param)
       planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
       planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
 	}
-	// printf("player loc x: %f\n", player->location.x);
-	// printf("player loc y: %f\n", player->location.y);
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_UP) || mlx_is_key_down(cub3d->mlx, MLX_KEY_W))
 	{
-		if (is_valid_location(player->location.x + player->direction.x * movSpeed, player->location.y + player->direction.y * movSpeed, cub3d->map.dimensions))
-		{
+		//check if next player position is over map bounds
+		if (is_valid_location(player->location.x + player->direction.x * movSpeed, 0, cub3d->map.dimensions))
 			player->location.x += player->direction.x * movSpeed;
+		if (is_valid_location(0, player->location.y + player->direction.y * movSpeed, cub3d->map.dimensions))
 			player->location.y += player->direction.y * movSpeed;
-		}
 
 	}
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_DOWN) || mlx_is_key_down(cub3d->mlx, MLX_KEY_S))
 	{
-		// printf("player dir x: %f\n", player->location.x);
-		// printf("player dir y: %f\n", player->location.y);
-		if (is_valid_location(player->location.x - player->direction.x * movSpeed, player->location.y - player->direction.y * movSpeed, cub3d->map.dimensions))
-		{
+		//check if next player position is over map bounds
+		if (is_valid_location(player->location.x - player->direction.x * movSpeed, 0, cub3d->map.dimensions))
 			player->location.x -= player->direction.x * movSpeed;
+		if (is_valid_location(0, player->location.y - player->direction.y * movSpeed, cub3d->map.dimensions))
 			player->location.y -= player->direction.y * movSpeed;
-		}
 	}
 	// printf("player dir x: %f\n", player->direction.x);
 	// printf("player dir y: %f\n", player->direction.y);
