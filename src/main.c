@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 16:37:34 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/04 17:23:40 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 
 static double		planeX		= 0;
 static double		planeY		= 0.66;
-static double		rotSpeed	= 0.06;
+static double		rotSpeed	= 0.045;
 static double		movSpeed	= 0.05;
 
 void	test(t_cub3d *cub3d)
@@ -230,7 +230,6 @@ void	move(void *param)
 		if (is_valid_location(0, player->location.y + -player->direction.x * movSpeed, cub3d->map.dimensions))
 			player->location.y += -player->direction.x * movSpeed;
 	}
-	test(cub3d);
 }
 
 void	pan(void *param)
@@ -295,10 +294,10 @@ void	pan(void *param)
 		}
 	}
 	mlx_set_mouse_pos(cub3d->mlx, WIDTH/2, HEIGHT/2);
-	// test(cub3d);
 	//reset mouse back to center
 	cur_x = WIDTH/2;
 	player->mouse.x = cur_x;
+	test(cub3d);
 }
 
 static void	debug(t_cub3d *cub3d)
@@ -330,6 +329,14 @@ static void	debug(t_cub3d *cub3d)
 	mlx_loop(cub3d->mlx);
 }
 
+void	init_plane_speed(t_cub3d *cub3d)
+{
+	cub3d->plane.x = 0;
+	cub3d->plane.y = 0.66;
+	cub3d->movSpeed = 0.045;
+	cub3d->rotSpeed = 0.05;
+}
+
 int	main(const int argc, const char *argv[])
 {
 	t_cub3d		cub3d;
@@ -343,6 +350,8 @@ int	main(const int argc, const char *argv[])
 		!load_textures(&cub3d) || \
 		!setup(&cub3d))
 		return (cleanup(&cub3d, EXIT_FAILURE));
+	//added to init the plane and speed in the cub3d struct
+	init_plane_speed(&cub3d);
 	debug(&cub3d);
 	return (cleanup(&cub3d, EXIT_SUCCESS));
 }

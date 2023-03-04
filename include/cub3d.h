@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 14:45:03 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/04 17:23:59 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ typedef struct s_cub3d
 	mlx_image_t		*background;
 	mlx_image_t		*foreground;
 	t_player		player;
+	t_dpos			plane;
+	double			movSpeed;
+	double			rotSpeed;
 }					t_cub3d;
 
 // error.c
@@ -89,5 +92,11 @@ bool	load_textures(t_cub3d *cub3d);
 
 // graphics_setup.c
 bool	setup(t_cub3d *cub3d);
+
+// hooks_main.c
+// void move(void *param);
+
+// // hooks_strafe.c
+// void	execute_strafe(t_cub3d *cub3d, t_player *player);
 
 #endif

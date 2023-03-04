@@ -40,6 +40,7 @@ SRC			:= $(addprefix src/, $(addsuffix .c, \
 OBJ 		:= $(subst src, obj, $(SRC:.c=.o))
 
 default: mkdir all
+	@git submodule update --init --recursive
 
 $(TARGET): $(OBJ)
 	@$(CC) $(CFLAGS) $(LIBFT) $(MLX) -o $@ $(OBJ) -lglfw3 $(LFLAGS) -o $(TARGET)
@@ -52,6 +53,9 @@ all: $(TARGET)
 run: default
 	@./$(TARGET) assets/maps/$(MAP).cub
 
+submodule_update:
+	@git submodule update --remote --merge
+
 mkdir:
 	@mkdir -p $(BIN_PATH) $(OBJ_PATH)
 
@@ -63,4 +67,4 @@ fclean: clean
 
 re: fclean default
 
-.PHONY: all clean fclean re run default mkdir
+.PHONY: all clean fclean re run default mkdir submodule_update
