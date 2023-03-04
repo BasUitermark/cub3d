@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 16:27:04 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/04 16:37:34 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,10 +215,6 @@ void	move(void *param)
 	}
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_A))
 	{
-		printf("player dir x: %f\n", player->direction.x);
-		printf("player dir y: %f\n", player->direction.y);
-		printf("player loc x: %f\n", player->location.x);
-		printf("player loc y: %f\n", player->location.y);
 		//check if next player position is over map bounds
 		if (is_valid_location(player->location.x + -player->direction.y * movSpeed, 0, cub3d->map.dimensions))
 			player->location.x += -player->direction.y * movSpeed;
@@ -228,10 +224,6 @@ void	move(void *param)
 	}
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_D))
 	{
-		printf("player dir x: %f\n", player->direction.x);
-		printf("player dir y: %f\n", player->direction.y);
-		printf("player loc x: %f\n", player->location.x);
-		printf("player loc y: %f\n", player->location.y);
 		//check if next player position is over map bounds
 		if (is_valid_location(player->location.x + player->direction.y * movSpeed, 0, cub3d->map.dimensions))
 			player->location.x += player->direction.y * movSpeed;
