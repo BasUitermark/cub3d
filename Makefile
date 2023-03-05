@@ -41,7 +41,11 @@ SRC			:= $(addprefix src/, $(addsuffix .c, \
 					textures \
 					graphics_setup \
 					utility_array \
-					utility_map))
+					utility_map \
+					hooks_main \
+					hooks_strafe \
+					hooks_camera \
+					location_validating))
 OBJ 		:= $(subst src, obj, $(SRC:.c=.o))
 
 default: mkdir all

@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 17:23:59 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/05 13:22:39 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,20 @@ bool	load_textures(t_cub3d *cub3d);
 bool	setup(t_cub3d *cub3d);
 
 // hooks_main.c
-// void move(void *param);
+void	new_move(void *param);
 
-// // hooks_strafe.c
-// void	execute_strafe(t_cub3d *cub3d, t_player *player);
+/**
+ * @brief Check if next player position hits wall or map bounds
+ * 
+ * @param cub3d 
+ * @param player 
+ */
+bool	is_valid_location(double x, double y, t_cub3d *cub3d);
+
+
+void	execute_strafe(t_cub3d *cub3d, t_player *player);
+void	execute_pan(t_cub3d *cub3d, t_player *player);
+
+void	test(t_cub3d *cub3d);
 
 #endif

@@ -6,60 +6,11 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 17:23:40 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/05 14:17:41 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <memory.h>
-// #include "MLX42/MLX42.h"
-// #define WIDTH 512
-// #define HEIGHT 512
-
-// static mlx_image_t* img;
-
-// void hook(void* param)
-// {
-// 	mlx_t* mlx = param;
-
-// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-// 		mlx_close_window(mlx);
-// 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-// 		img->instances[0].y -= 5;
-// 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-// 		img->instances[0].y += 5;
-// 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-// 		img->instances[0].x -= 5;
-// 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-// 		img->instances[0].x += 5;
-// }
-
-// int32_t	main(void)
-// {
-// 	mlx_t* mlx;
-
-// 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-// 		return(EXIT_FAILURE);
-
-// 	img = mlx_new_image(mlx, 128, 128);
-// 	memset(img->pixels, 255, img->width * img->height * sizeof(int));
-// 	mlx_image_to_window(mlx, img, 0, 0);
-
-// 	mlx_loop_hook(mlx, &hook, mlx);
-// 	mlx_loop(mlx);
-
-// 	mlx_terminate(mlx);
-// 	return (EXIT_SUCCESS);
-// }
-
 #include "cub3d.h"
-
-
-static double		planeX		= 0;
-static double		planeY		= 0.66;
-static double		rotSpeed	= 0.045;
-static double		movSpeed	= 0.05;
 
 void	test(t_cub3d *cub3d)
 {
@@ -73,8 +24,8 @@ void	test(t_cub3d *cub3d)
 	{
 		//calculate ray position and direction
 		double cameraX = 2 * index / (double)WIDTH - 1; //x-coordinate in camera space
-		double rayDirX = player->direction.x + planeX * cameraX;
-		double rayDirY = player->direction.y + planeY * cameraX;
+		double rayDirX = player->direction.x + cub3d->plane.x * cameraX;
+		double rayDirY = player->direction.y + cub3d->plane.y * cameraX;
 		//which box of the map we're in
 		int mapX = (int)player->location.x;
 		int mapY = (int)player->location.y;
@@ -101,7 +52,7 @@ void	test(t_cub3d *cub3d)
 			stepX = 1;
 			sideDistX = (mapX + 1.0 - player->location.x) * deltaDistX;
 		}
-		if(rayDirY < 0)
+		if (rayDirY < 0)
 		{
 			stepY = -1;
 			sideDistY = (player->location.y - mapY) * deltaDistY;
@@ -112,10 +63,10 @@ void	test(t_cub3d *cub3d)
 			sideDistY = (mapY + 1.0 - player->location.y) * deltaDistY;
 		}
 		//perform DDA
-		while(hit == 0)
+		while (hit == 0)
 		{
 			//jump to next map square, either in x-direction, or in y-direction
-			if(sideDistX < sideDistY)
+			if (sideDistX < sideDistY)
 			{
 				sideDistX += deltaDistX;
 				mapX += stepX;
@@ -128,7 +79,7 @@ void	test(t_cub3d *cub3d)
 				side = 1;
 			}
 			//Check if ray has hit a wall
-			if(map->map[mapY][mapX] == '1') hit = 1;
+			if (map->map[mapY][mapX] == '1') hit = 1;
 		}
 		//Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
 		//hit to the camera plane. Euclidean to center camera point would give fisheye effect!
@@ -136,15 +87,15 @@ void	test(t_cub3d *cub3d)
 		//for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
 		//because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
 		//steps, but we subtract deltaDist once because one step more into the wall was taken above.
-		if(side == 0) perpWallDist = (sideDistX - deltaDistX);
+		if (side == 0) perpWallDist = (sideDistX - deltaDistX);
 		else          perpWallDist = (sideDistY - deltaDistY);
 		//Calculate height of line to draw on screen
 		int lineHeight = (int)(HEIGHT / perpWallDist);
 		//calculate lowest and highest pixel to fill in current stripe
 		int drawStart = -lineHeight / 2 + HEIGHT / 2;
-		if(drawStart < 0) drawStart = 0;
+		if (drawStart < 0) drawStart = 0;
 		int drawEnd = lineHeight / 2 + HEIGHT / 2;
-		if(drawEnd >= HEIGHT) drawEnd = HEIGHT - 1;
+		if (drawEnd >= HEIGHT) drawEnd = HEIGHT - 1;
 		//choose wall color
 		int color = 0x00000000;
 		if (map->map[mapY][mapX] == '1')
@@ -170,164 +121,33 @@ void	test(t_cub3d *cub3d)
 	}
 }
 
-static bool is_valid_location(double x, double y, t_ipos dimensions)
-{
-	if (x)
-	{
-		if (x - movSpeed < 1 || x + movSpeed > dimensions.x - 1)
-			return (FALSE);
-		return (TRUE);
-	}
-	else if (y)
-	{
-		if (y - movSpeed < 1 || y + movSpeed > dimensions.y - 1)
-			return (FALSE);
-		return (TRUE);
-	}
-	return (FALSE);
-}
+// static void	debug(t_cub3d *cub3d)
+// {
+// 	printf("texture 0  : '%s'\n", cub3d->map.textures[0]);
+// 	printf("texture 1  : '%s'\n", cub3d->map.textures[1]);
+// 	printf("texture 2  : '%s'\n", cub3d->map.textures[2]);
+// 	printf("texture 3  : '%s'\n", cub3d->map.textures[3]);
+// 	printf("color C    : '0x%X'\n", cub3d->map.ceiling);
+// 	printf("color F    : '0x%X'\n", cub3d->map.floor);
+// 	printf("map width  : %d \n", cub3d->map.dimensions.x);
+// 	printf("map height : %d \n", cub3d->map.dimensions.y);
 
-void	move(void *param)
-{
-	t_cub3d		*cub3d;
-	t_player	*player;
+// 	printf("map        : ");
+// 	for (int i = 0; i < cub3d->map.dimensions.x + 2; i++)
+// 		printf("-");
+// 	printf("\n");
+// 	for (int i = 0; i < cub3d->map.dimensions.y; i++)
+// 		printf("           : |%s|\n", cub3d->map.map[i]);
+// 	printf("           : ");
+// 	for (int i = 0; i < cub3d->map.dimensions.x + 2; i++)
+// 		printf("-");
+// 	printf("\n");
 
-	cub3d = (t_cub3d *)param;
-	player = &cub3d->player;
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(cub3d->mlx);
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_W))
-	{
-		//check if next player position is over map bounds
-		if (is_valid_location(player->location.x + player->direction.x * movSpeed, 0, cub3d->map.dimensions))
-			player->location.x += player->direction.x * movSpeed;
-		if (is_valid_location(0, player->location.y + player->direction.y * movSpeed, cub3d->map.dimensions))
-			player->location.y += player->direction.y * movSpeed;
-
-	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_S))
-	{
-		//check if next player position is over map bounds
-		if (is_valid_location(player->location.x - player->direction.x * movSpeed, 0, cub3d->map.dimensions))
-			player->location.x -= player->direction.x * movSpeed;
-		if (is_valid_location(0, player->location.y - player->direction.y * movSpeed, cub3d->map.dimensions))
-			player->location.y -= player->direction.y * movSpeed;
-	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_A))
-	{
-		//check if next player position is over map bounds
-		if (is_valid_location(player->location.x + -player->direction.y * movSpeed, 0, cub3d->map.dimensions))
-			player->location.x += -player->direction.y * movSpeed;
-		if (is_valid_location(0, player->location.y + player->direction.x * movSpeed, cub3d->map.dimensions))
-			player->location.y += player->direction.x * movSpeed;
-
-	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_D))
-	{
-		//check if next player position is over map bounds
-		if (is_valid_location(player->location.x + player->direction.y * movSpeed, 0, cub3d->map.dimensions))
-			player->location.x += player->direction.y * movSpeed;
-		if (is_valid_location(0, player->location.y + -player->direction.x * movSpeed, cub3d->map.dimensions))
-			player->location.y += -player->direction.x * movSpeed;
-	}
-}
-
-void	pan(void *param)
-{
-	t_cub3d		*cub3d;
-	t_player	*player;
-	int			cur_x;
-	int			cur_y;
-
-	cub3d = (t_cub3d *)param;
-	player = &cub3d->player;
-
-	mlx_get_mouse_pos(cub3d->mlx, &cur_x, &cur_y);
-	mlx_set_cursor_mode(cub3d->mlx, 0x00034002);
-
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(cub3d->mlx);
-	//left and right key
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_LEFT))
-	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = player->direction.x;
-		player->direction.x = player->direction.x * cos(rotSpeed) - player->direction.y * sin(rotSpeed);
-		player->direction.y = oldDirX * sin(rotSpeed) + player->direction.y * cos(rotSpeed);
-		double oldPlaneX = planeX;
-		planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-		planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT))
-	{
-	  //both camera direction and camera plane must be rotated
-	  double oldDirX = player->direction.x;
-	  player->direction.x = player->direction.x * cos(-rotSpeed) - player->direction.y * sin(-rotSpeed);
-	  player->direction.y = oldDirX * sin(-rotSpeed) + player->direction.y * cos(-rotSpeed);
-	  double oldPlaneX = planeX;
-	  planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-	  planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-	}
-	//mouse movement
-	// only track if mouse is being moved
-	if (cur_x != player->mouse.x)
-	{
-		if (cur_x < player->mouse.x)
-		{
-			//both camera direction and camera plane must be rotated
-			double oldDirX = player->direction.x;
-			player->direction.x = player->direction.x * cos(rotSpeed) - player->direction.y * sin(rotSpeed);
-			player->direction.y = oldDirX * sin(rotSpeed) + player->direction.y * cos(rotSpeed);
-			double oldPlaneX = planeX;
-			planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-			planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-		}
-		else if (cur_x > player->mouse.x)
-		{
-			//both camera direction and camera plane must be rotated
-			double oldDirX = player->direction.x;
-			player->direction.x = player->direction.x * cos(-rotSpeed) - player->direction.y * sin(-rotSpeed);
-			player->direction.y = oldDirX * sin(-rotSpeed) + player->direction.y * cos(-rotSpeed);
-			double oldPlaneX = planeX;
-			planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-			planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-		}
-	}
-	mlx_set_mouse_pos(cub3d->mlx, WIDTH/2, HEIGHT/2);
-	//reset mouse back to center
-	cur_x = WIDTH/2;
-	player->mouse.x = cur_x;
-	test(cub3d);
-}
-
-static void	debug(t_cub3d *cub3d)
-{
-	printf("texture 0  : '%s'\n", cub3d->map.textures[0]);
-	printf("texture 1  : '%s'\n", cub3d->map.textures[1]);
-	printf("texture 2  : '%s'\n", cub3d->map.textures[2]);
-	printf("texture 3  : '%s'\n", cub3d->map.textures[3]);
-	printf("color C    : '0x%X'\n", cub3d->map.ceiling);
-	printf("color F    : '0x%X'\n", cub3d->map.floor);
-	printf("map width  : %d \n", cub3d->map.dimensions.x);
-	printf("map height : %d \n", cub3d->map.dimensions.y);
-
-	printf("map        : ");
-	for (int i = 0; i < cub3d->map.dimensions.x + 2; i++)
-		printf("-");
-	printf("\n");
-	for (int i = 0; i < cub3d->map.dimensions.y; i++)
-		printf("           : |%s|\n", cub3d->map.map[i]);
-	printf("           : ");
-	for (int i = 0; i < cub3d->map.dimensions.x + 2; i++)
-		printf("-");
-	printf("\n");
-
-	mlx_image_to_window(cub3d->mlx, cub3d->background, 0, 0);
-	mlx_image_to_window(cub3d->mlx, cub3d->foreground, 0, 0);
-	mlx_loop_hook(cub3d->mlx, &move, cub3d);
-	mlx_loop_hook(cub3d->mlx, &pan, cub3d);
-	mlx_loop(cub3d->mlx);
-}
+// 	mlx_image_to_window(cub3d->mlx, cub3d->background, 0, 0);
+// 	mlx_image_to_window(cub3d->mlx, cub3d->foreground, 0, 0);
+// 	mlx_loop_hook(cub3d->mlx, &new_move, cub3d);
+// 	mlx_loop(cub3d->mlx);
+// }
 
 void	init_plane_speed(t_cub3d *cub3d)
 {
@@ -343,15 +163,19 @@ int	main(const int argc, const char *argv[])
 
 	ft_memset(&cub3d, 0, sizeof(t_cub3d));
 	if (argc != 2)
-		return ((printf( BOLD "usage: ./cub3d <map>\n" RESET) & 0) | EXIT_FAILURE);
+		return ((printf(BOLD "usage: ./cub3d <map>\n" RESET) & 0) | \
+		EXIT_FAILURE);
 	printf("%s\n", argv[1]);
 	if (!parse_map(&cub3d, argv[1]) || \
 		!validate_map(&cub3d) || \
 		!load_textures(&cub3d) || \
 		!setup(&cub3d))
 		return (cleanup(&cub3d, EXIT_FAILURE));
-	//added to init the plane and speed in the cub3d struct
 	init_plane_speed(&cub3d);
-	debug(&cub3d);
+	// debug(&cub3d);
+	mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0);
+	mlx_image_to_window(cub3d.mlx, cub3d.foreground, 0, 0);
+	mlx_loop_hook(cub3d.mlx, &new_move, &cub3d);
+	mlx_loop(cub3d.mlx);
 	return (cleanup(&cub3d, EXIT_SUCCESS));
 }
