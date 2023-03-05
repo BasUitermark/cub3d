@@ -6,42 +6,11 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:45:58 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 10:38:17 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/04 21:51:03 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// static char	*parse_element(t_cub3d *cub3d, const char *key)
-// {
-// 	int		index;
-// 	int		start;
-// 	int		len;
-
-// 	index = 0;
-// 	while (cub3d->map.raw_map[index] && \
-// 		0 != ft_strncmp(cub3d->map.raw_map[index], key, ft_strlen(key)))
-// 		index++;
-// 	if (!cub3d->map.raw_map[index])
-// 		return (NULL);
-// 	start = 0;
-// 	while (cub3d->map.raw_map[index][start] && \
-// 		cub3d->map.raw_map[index][start] != ' ')
-// 		start++;
-// 	while (cub3d->map.raw_map[index][start] && \
-// 		(!ft_isprint(cub3d->map.raw_map[index][start]) || \
-// 		cub3d->map.raw_map[index][start] == ' '))
-// 		start++;
-// 	if (!cub3d->map.raw_map[index][start])
-// 		return (NULL);
-// 	len = 0;
-// 	while (cub3d->map.raw_map[index][start + len] && \
-// 		ft_isprint(cub3d->map.raw_map[index][start + len]) && \
-// 		cub3d->map.raw_map[index][start + len] != ' ')
-// 		len++;
-// 	cub3d->map.raw_map[index][start + len] = '\0';
-// 	return (ft_strdup(&cub3d->map.raw_map[index][start]));
-// }
 
 static char	*parse_element(t_cub3d *cub3d, const char *key)
 {
