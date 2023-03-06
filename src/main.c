@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 16:04:07 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/06 16:41:55 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,6 @@
 #include "cub3d.h"
 #include "libft.h"
 
-
-static double		planeX		= 0;
-static double		planeY		= 0.66;
 static double		rotSpeed	= 0.06;
 static double		movSpeed	= 0.05;
 
@@ -74,8 +71,8 @@ void	test(t_cub3d *cub3d)
 	{
 		//calculate ray position and direction
 		double cameraX = 2 * index / (double)WIDTH - 1; //x-coordinate in camera space
-		double rayDirX = player->direction.x + planeX * cameraX;
-		double rayDirY = player->direction.y + planeY * cameraX;
+		double rayDirX = player->direction.x + player->plane.x * cameraX;
+		double rayDirY = player->direction.y + player->plane.y * cameraX;
 		//which box of the map we're in
 		int mapX = (int)player->location.x;
 		int mapY = (int)player->location.y;
@@ -156,7 +153,19 @@ void	test(t_cub3d *cub3d)
 		// verLine(x, drawStart, drawEnd, color);
 		if (drawEnd < 0)
 			drawEnd = HEIGHT - 1;
-		// printf("%d , %d , %d, 0x%X\n", index, drawStart, drawEnd, color);
+		if (index == WIDTH / 2 || true) {
+			// printf("%d , %d , %d, 0x%X\n", index, drawStart, drawEnd, color);
+			printf("plane  x %.2f , y %.2f \n", player->plane.x, player->plane.y);
+			printf("player x %.2f , y %.2f \n", player->direction.x, player->direction.y);
+			if (!side && rayDirX >= 0)
+				color = 0xFF0000FF; // north
+			else if (!side && rayDirX < 0)
+				color = 0x00FF00FF; // south
+			else if (side && rayDirY >= 0)
+				color = 0x0000FFFF; // west
+			else
+				color = 0xFFFF00FF; // east
+		}
 		if (drawEnd < 0 || drawEnd > HEIGHT || drawStart < 0 || drawStart > HEIGHT)
 		{
 			index++;
@@ -186,9 +195,9 @@ void	hook(void *param)
 		double oldDirX = player->direction.x;
 		player->direction.x = player->direction.x * cos(rotSpeed) - player->direction.y * sin(rotSpeed);
 		player->direction.y = oldDirX * sin(rotSpeed) + player->direction.y * cos(rotSpeed);
-		double oldPlaneX = planeX;
-		planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-		planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+		double oldPlane = player->plane.x;
+		player->plane.x = player->plane.x * cos(rotSpeed) - player->plane.y * sin(rotSpeed);
+		player->plane.y = oldPlane * sin(rotSpeed) + player->plane.y * cos(rotSpeed);
 	}
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT))
 	{
@@ -196,9 +205,9 @@ void	hook(void *param)
       double oldDirX = player->direction.x;
       player->direction.x = player->direction.x * cos(-rotSpeed) - player->direction.y * sin(-rotSpeed);
       player->direction.y = oldDirX * sin(-rotSpeed) + player->direction.y * cos(-rotSpeed);
-      double oldPlaneX = planeX;
-      planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-      planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
+      double oldPlane = player->plane.x;
+      player->plane.x = player->plane.x * cos(-rotSpeed) - player->plane.y * sin(-rotSpeed);
+      player->plane.y = oldPlane * sin(-rotSpeed) + player->plane.y * cos(-rotSpeed);
 	}
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_UP))
 	{

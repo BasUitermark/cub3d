@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:28:19 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 16:02:16 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/06 16:45:40 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,29 @@
 
 static void	set_player_direction(t_map *map, t_player *player, t_ipos *pos)
 {
-	player->location.x = (double)pos->x;
-	player->location.y = (double)pos->y;
-	player->direction.x = -1.0; // kifesh? (south)
-	player->direction.y = 0.0;
-	/*
-	 * hoe de neuk werkt deze ding?
-	 * ik weet niet
-	 */
+	player->location.x = (double)pos->x + 0.5;
+	player->location.y = (double)pos->y + 0.5;
+	if (map->map[pos->y][pos->x] == 'N')
+	{
+		player->plane.x = 0;
+		player->plane.y = -0.666;
+		player->direction.x = 1;
+		player->direction.y = 0;
+	}
+	else if (map->map[pos->y][pos->x] == 'E')
+	{
+		player->plane.x = -0.666;
+		player->plane.y = 0;
+		player->direction.x = 0;
+		player->direction.y = -1.0;
+	}
+	else if (map->map[pos->y][pos->x] == 'S')
+	{
+		player->plane.x = 0;
+		player->plane.y = 0.666;
+		player->direction.x = -1.0;
+		player->direction.y = 0;
+	}
 	map->map[pos->y][pos->x] = '0';
 }
 
@@ -29,6 +44,10 @@ static bool	check_players(t_cub3d *cub3d)
 {
 	t_ipos	pos;
 
+	cub3d->player.plane.x = 0.666;
+	cub3d->player.plane.y = 0;
+	cub3d->player.direction.x = 0;
+	cub3d->player.direction.y = 1.0;
 	pos.y = 0;
 	while (cub3d->map.map[pos.y])
 	{

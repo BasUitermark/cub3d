@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 14:40:14 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/06 16:19:52 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_player
 {
 	t_dpos			location;
 	t_dpos			direction;
+	t_dpos			plane;
 }					t_player;
 
 typedef struct s_map
