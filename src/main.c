@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/06 16:41:55 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/06 16:59:09 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,17 @@ void	test(t_cub3d *cub3d)
 		// verLine(x, drawStart, drawEnd, color);
 		if (drawEnd < 0)
 			drawEnd = HEIGHT - 1;
-		if (index == WIDTH / 2 || true) {
+
+		double wallX; //where exactly the wall was hit
+		if(side == 0) wallX = player->location.y + perpWallDist * rayDirY;
+		else          wallX = player->location.x + perpWallDist * rayDirX;
+		wallX -= floor(wallX);
+
+		if (index == WIDTH / 2) {
 			// printf("%d , %d , %d, 0x%X\n", index, drawStart, drawEnd, color);
-			printf("plane  x %.2f , y %.2f \n", player->plane.x, player->plane.y);
-			printf("player x %.2f , y %.2f \n", player->direction.x, player->direction.y);
+			// printf("plane  x %.2f , y %.2f \n", player->plane.x, player->plane.y);
+			// printf("player x %.2f , y %.2f \n", player->direction.x, player->direction.y);
+			printf("wall x: %.2f\n", wallX);
 			if (!side && rayDirX >= 0)
 				color = 0xFF0000FF; // north
 			else if (!side && rayDirX < 0)
