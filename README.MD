@@ -47,10 +47,7 @@ Download and build project:
 ## :eyes: Usage
 
 ```c
-make
-```
-```c
-./minishell
+make run MAP=[map name from assets/maps]
 ```
 
 
