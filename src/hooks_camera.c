@@ -6,7 +6,7 @@
 /*   By: buiterma <buiterma@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/05 13:02:16 by buiterma      #+#    #+#                 */
-/*   Updated: 2023/03/07 09:22:51 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/07 16:54:56 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,21 @@ void	execute_pan(t_cub3d *cub3d, t_player *player)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = player->direction.x;
+		player->direction.x = player->direction.x * cos(-cub3d->rotSpeed) - player->direction.y * sin(-cub3d->rotSpeed);
+		player->direction.y = oldDirX * sin(-cub3d->rotSpeed) + player->direction.y * cos(-cub3d->rotSpeed);
+		double oldPlane = player->plane.x;
+		player->plane.x = player->plane.x * cos(-cub3d->rotSpeed) - player->plane.y * sin(-cub3d->rotSpeed);
+		player->plane.y = oldPlane * sin(-cub3d->rotSpeed) + player->plane.y * cos(-cub3d->rotSpeed);
+	}
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT))
+	{
+		//both camera direction and camera plane must be rotated
+		double oldDirX = player->direction.x;
 		player->direction.x = player->direction.x * cos(cub3d->rotSpeed) - player->direction.y * sin(cub3d->rotSpeed);
 		player->direction.y = oldDirX * sin(cub3d->rotSpeed) + player->direction.y * cos(cub3d->rotSpeed);
 		double oldPlane = player->plane.x;
 		player->plane.x = player->plane.x * cos(cub3d->rotSpeed) - player->plane.y * sin(cub3d->rotSpeed);
 		player->plane.y = oldPlane * sin(cub3d->rotSpeed) + player->plane.y * cos(cub3d->rotSpeed);
-	}
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT))
-	{
-      //both camera direction and camera plane must be rotated
-      double oldDirX = player->direction.x;
-      player->direction.x = player->direction.x * cos(-cub3d->rotSpeed) - player->direction.y * sin(-cub3d->rotSpeed);
-      player->direction.y = oldDirX * sin(-cub3d->rotSpeed) + player->direction.y * cos(-cub3d->rotSpeed);
-      double oldPlane = player->plane.x;
-      player->plane.x = player->plane.x * cos(-cub3d->rotSpeed) - player->plane.y * sin(-cub3d->rotSpeed);
-      player->plane.y = oldPlane * sin(-cub3d->rotSpeed) + player->plane.y * cos(-cub3d->rotSpeed);
 	}
 	//mouse movement
 	// only track if mouse is being moved
@@ -51,23 +51,25 @@ void	execute_pan(t_cub3d *cub3d, t_player *player)
 		{
 			//both camera direction and camera plane must be rotated
 			double oldDirX = player->direction.x;
-			player->direction.x = player->direction.x * cos(cub3d->rotSpeed) - player->direction.y * sin(cub3d->rotSpeed);
-			player->direction.y = oldDirX * sin(cub3d->rotSpeed) + player->direction.y * cos(cub3d->rotSpeed);
-			double oldPlane = player->plane.x;
-			player->plane.x = player->plane.x * cos(cub3d->rotSpeed) - player->plane.y * sin(cub3d->rotSpeed);
-			player->plane.y = oldPlane * sin(cub3d->rotSpeed) + player->plane.y * cos(cub3d->rotSpeed);
-		}
-		else if (cur_x > player->mouse.x)
-		{
-			//both camera direction and camera plane must be rotated
-			double oldDirX = player->direction.x;
 			player->direction.x = player->direction.x * cos(-cub3d->rotSpeed) - player->direction.y * sin(-cub3d->rotSpeed);
 			player->direction.y = oldDirX * sin(-cub3d->rotSpeed) + player->direction.y * cos(-cub3d->rotSpeed);
 			double oldPlane = player->plane.x;
 			player->plane.x = player->plane.x * cos(-cub3d->rotSpeed) - player->plane.y * sin(-cub3d->rotSpeed);
 			player->plane.y = oldPlane * sin(-cub3d->rotSpeed) + player->plane.y * cos(-cub3d->rotSpeed);
 		}
+		else if (cur_x > player->mouse.x)
+		{
+			//both camera direction and camera plane must be rotated
+			double oldDirX = player->direction.x;
+			player->direction.x = player->direction.x * cos(cub3d->rotSpeed) - player->direction.y * sin(cub3d->rotSpeed);
+			player->direction.y = oldDirX * sin(cub3d->rotSpeed) + player->direction.y * cos(cub3d->rotSpeed);
+			double oldPlane = player->plane.x;
+			player->plane.x = player->plane.x * cos(cub3d->rotSpeed) - player->plane.y * sin(cub3d->rotSpeed);
+			player->plane.y = oldPlane * sin(cub3d->rotSpeed) + player->plane.y * cos(cub3d->rotSpeed);
+		}
 	}
+	printf("player  %.2f , %.2f \n", player->direction.x, player->direction.y);
+	printf("plane   %.2f , %.2f \n", player->plane.x, player->plane.y);
 	mlx_set_mouse_pos(cub3d->mlx, WIDTH / 2, HEIGHT / 2);
 	//reset mouse back to center
 	cur_x = WIDTH / 2;
