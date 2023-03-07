@@ -60,7 +60,7 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 all: $(TARGET)
 
 run: default
-	@./$(TARGET) assets/maps/$(MAP).cub
+	@./$(TARGET) assets/maps/$(filter-out $@,$(MAKECMDGOALS)).cub
 
 submodule:
 	@git submodule update --init --recursive
