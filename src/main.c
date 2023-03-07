@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/07 09:10:21 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/07 16:21:56 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	test(t_cub3d *cub3d)
 			// printf("%d , %d , %d, 0x%X\n", index, drawStart, drawEnd, color);
 			// printf("plane  x %.2f , y %.2f \n", player->plane.x, player->plane.y);
 			// printf("player x %.2f , y %.2f \n", player->direction.x, player->direction.y);
-			printf("wall x: %.2f\n", wallX);
+			// printf("wall x: %.2f\n", wallX);
 			if (!side && rayDirX >= 0)
 				color = 0xFF0000FF; // north
 			else if (!side && rayDirX < 0)
@@ -191,7 +191,10 @@ int	main(const int argc, const char *argv[])
 		!setup(&cub3d))
 		return (cleanup(&cub3d, EXIT_FAILURE));
 	init_plane_speed(&cub3d);
-	// debug(&cub3d);
+	printf("%c\n", cub3d.map.map[1][4]);
+	printf("%zu\n", ft_strlen(cub3d.map.map[0]));
+	// for (int i = 0; i < 6; i++)
+	// 	printf("%s\n", cub3d.map.map[i]);
 	mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0);
 	mlx_image_to_window(cub3d.mlx, cub3d.foreground, 0, 0);
 	mlx_loop_hook(cub3d.mlx, &new_move, &cub3d);

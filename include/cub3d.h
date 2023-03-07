@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/07 09:08:19 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/07 16:50:34 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	new_move(void *param);
  * @param player 
  */
 bool	is_valid_location(double x, double y, t_cub3d *cub3d);
+bool	is_valid_location_new(double x, double y, t_cub3d *cub3d);
 
 
 void	execute_strafe(t_cub3d *cub3d, t_player *player);
