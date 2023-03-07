@@ -6,7 +6,7 @@
 /*   By: buiterma <buiterma@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/05 13:02:16 by buiterma      #+#    #+#                 */
-/*   Updated: 2023/03/07 16:54:56 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/07 18:31:21 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	execute_pan(t_cub3d *cub3d, t_player *player)
 
 	mlx_get_mouse_pos(cub3d->mlx, &cur_x, &cur_y);
 	mlx_set_cursor_mode(cub3d->mlx, 0x00034002);
-
+	printf(GREEN BOLD "Diff: %d\n" RESET, player->mouse.x -  cur_x);
+		
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub3d->mlx);
 	//left and right key
@@ -68,10 +69,9 @@ void	execute_pan(t_cub3d *cub3d, t_player *player)
 			player->plane.y = oldPlane * sin(cub3d->rotSpeed) + player->plane.y * cos(cub3d->rotSpeed);
 		}
 	}
-	printf("player  %.2f , %.2f \n", player->direction.x, player->direction.y);
-	printf("plane   %.2f , %.2f \n", player->plane.x, player->plane.y);
 	mlx_set_mouse_pos(cub3d->mlx, WIDTH / 2, HEIGHT / 2);
 	//reset mouse back to center
 	cur_x = WIDTH / 2;
 	player->mouse.x = cur_x;
+	cub3d->rotSpeed = 0.05;
 }

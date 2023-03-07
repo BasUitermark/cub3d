@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/07 17:05:57 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/07 17:53:11 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,17 +184,13 @@ int	main(const int argc, const char *argv[])
 	if (argc != 2)
 		return ((printf(BOLD "usage: ./cub3d <map>\n" RESET) & 0) | \
 		EXIT_FAILURE);
-	printf("%s\n", argv[1]);
+	// printf("%s\n", argv[1]);
 	if (!parse_map(&cub3d, argv[1]) || \
 		!validate_map(&cub3d) || \
 		!load_textures(&cub3d) || \
 		!setup(&cub3d))
 		return (cleanup(&cub3d, EXIT_FAILURE));
 	init_plane_speed(&cub3d);
-	printf("%c\n", cub3d.map.map[1][4]);
-	printf("%zu\n", ft_strlen(cub3d.map.map[0]));
-	// for (int i = 0; i < 6; i++)
-	// 	printf("%s\n", cub3d.map.map[i]);
 	mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0);
 	mlx_image_to_window(cub3d.mlx, cub3d.foreground, 0, 0);
 	mlx_loop_hook(cub3d.mlx, &new_move, &cub3d);
