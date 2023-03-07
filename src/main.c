@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/07 09:10:21 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/07 16:49:13 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	test(t_cub3d *cub3d)
 			// printf("%d , %d , %d, 0x%X\n", index, drawStart, drawEnd, color);
 			// printf("plane  x %.2f , y %.2f \n", player->plane.x, player->plane.y);
 			// printf("player x %.2f , y %.2f \n", player->direction.x, player->direction.y);
-			printf("wall x: %.2f\n", wallX);
+			// printf("wall x: %.2f\n", wallX);
 			if (!side && rayDirX >= 0)
 				color = 0xFF0000FF; // north
 			else if (!side && rayDirX < 0)
