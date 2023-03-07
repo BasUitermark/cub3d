@@ -1,6 +1,3 @@
 cub3d
-src/*.o
-tmp/
 .vscode
-textures/
-*.cub
+*.o

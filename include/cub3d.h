@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/06 16:19:52 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/07 09:08:19 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # include <math.h>
 # include <stdbool.h>
 
-# include "libft.h"
-# include "MLX42/MLX42.h"
+# include "../libs/libft/include/libft.h"
+# include "../libs/MLX42/include/MLX42/MLX42.h"
 
-# define WIDTH 	854
-# define HEIGHT 480
+# define WIDTH 	1920
+# define HEIGHT 1080
 
 typedef struct s_ipos
 {
@@ -43,6 +43,7 @@ typedef struct s_player
 	t_dpos			location;
 	t_dpos			direction;
 	t_dpos			plane;
+	t_ipos			mouse;
 }					t_player;
 
 typedef struct s_map
@@ -63,6 +64,9 @@ typedef struct s_cub3d
 	mlx_image_t		*background;
 	mlx_image_t		*foreground;
 	t_player		player;
+	t_dpos			plane;
+	double			movSpeed;
+	double			rotSpeed;
 }					t_cub3d;
 
 // error.c
@@ -89,5 +93,22 @@ bool	load_textures(t_cub3d *cub3d);
 
 // graphics_setup.c
 bool	setup(t_cub3d *cub3d);
+
+// hooks_main.c
+void	new_move(void *param);
+
+/**
+ * @brief Check if next player position hits wall or map bounds
+ * 
+ * @param cub3d 
+ * @param player 
+ */
+bool	is_valid_location(double x, double y, t_cub3d *cub3d);
+
+
+void	execute_strafe(t_cub3d *cub3d, t_player *player);
+void	execute_pan(t_cub3d *cub3d, t_player *player);
+
+void	test(t_cub3d *cub3d);
 
 #endif
