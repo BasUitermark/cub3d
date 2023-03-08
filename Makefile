@@ -38,6 +38,7 @@ SRC			:= $(addprefix src/, $(addsuffix .c, \
 					map_validating \
 					error \
 					textures \
+					raytrace \
 					graphics_setup \
 					utility_array \
 					utility_map \

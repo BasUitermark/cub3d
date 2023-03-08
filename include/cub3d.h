@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/07 16:50:34 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/08 18:05:25 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include "../libs/libft/include/libft.h"
 # include "../libs/MLX42/include/MLX42/MLX42.h"
 
-# define WIDTH 	1920
-# define HEIGHT 1080
+# define WIDTH 	854
+# define HEIGHT 480
 
 typedef struct s_ipos
 {
@@ -55,6 +55,19 @@ typedef struct s_map
 	int				ceiling;
 	int				floor;
 }					t_map;
+
+typedef struct s_ray
+{
+	double			camera_x;
+	t_dpos			direction;
+	t_ipos			player_loc;
+	t_dpos			delta_dist;
+	t_dpos			side_dist;
+	t_ipos			step;
+	double			wall_x;
+	int				side;
+	t_ipos			line;
+}					t_ray;
 
 typedef struct s_cub3d
 {
@@ -94,6 +107,9 @@ bool	load_textures(t_cub3d *cub3d);
 // graphics_setup.c
 bool	setup(t_cub3d *cub3d);
 
+// raytrace.c
+void	raytrace(int x, t_ray *ray, t_cub3d *cub3d);
+
 // hooks_main.c
 void	new_move(void *param);
 
@@ -105,7 +121,6 @@ void	new_move(void *param);
  */
 bool	is_valid_location(double x, double y, t_cub3d *cub3d);
 bool	is_valid_location_new(double x, double y, t_cub3d *cub3d);
-
 
 void	execute_strafe(t_cub3d *cub3d, t_player *player);
 void	execute_pan(t_cub3d *cub3d, t_player *player);
