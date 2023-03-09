@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/08 18:12:25 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/09 19:00:53 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	test(t_cub3d *cub3d)
 		draw_line(&ray, cub3d->foreground, cub3d->textures[ray.side], index);
 		index++;
 	}
-	mlx_image_to_window(cub3d->mlx, cub3d->foreground, 0, 0); // this shit is causing lag ????? how ??????
+	// moving this bitch to main seems to induce less lag
+	// mlx_image_to_window(cub3d->mlx, cub3d->foreground, 0, 0); // this shit is causing lag ????? how ??????
 }
 
 int	main(const int argc, const char *argv[])
@@ -75,6 +76,7 @@ int	main(const int argc, const char *argv[])
 	cub3d.movSpeed = 0.045;
 	cub3d.rotSpeed = 0.05;
 	mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0);
+	mlx_image_to_window(cub3d.mlx, cub3d.foreground, 0, 0);
 	mlx_loop_hook(cub3d.mlx, &new_move, &cub3d);	// (not sure!!!) uses queue which gets really, really big since events constantly fire and it cannot keep up (i think!!)
 	mlx_loop(cub3d.mlx);
 	return (cleanup(&cub3d, EXIT_SUCCESS));

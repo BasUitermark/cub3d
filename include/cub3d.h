@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/08 18:05:25 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/09 18:55:01 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@
 # include "../libs/libft/include/libft.h"
 # include "../libs/MLX42/include/MLX42/MLX42.h"
 
-# define WIDTH 	854
-# define HEIGHT 480
+# define WIDTH 	1920
+# define HEIGHT 1080
+// # define WIDTH 	854
+// # define HEIGHT 480
 
 typedef struct s_ipos
 {
