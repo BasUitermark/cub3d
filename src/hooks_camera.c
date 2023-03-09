@@ -6,7 +6,7 @@
 /*   By: buiterma <buiterma@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/05 13:02:16 by buiterma      #+#    #+#                 */
-/*   Updated: 2023/03/07 21:16:08 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/09 17:54:14 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,8 @@ void	execute_pan(t_cub3d *cub3d, t_player *player)
 			player->plane.y = oldPlane * sin(cub3d->rotSpeed) + player->plane.y * cos(cub3d->rotSpeed);
 		}
 	}
-	mlx_set_mouse_pos(cub3d->mlx, WIDTH / 2, HEIGHT / 2);
 	//reset mouse back to center
 	cur_x = WIDTH / 2;
 	player->mouse.x = cur_x;
-	// cub3d->rotSpeed = 0.05;
+	mlx_set_mouse_pos(cub3d->mlx, WIDTH / 2, HEIGHT / 2);
 }
