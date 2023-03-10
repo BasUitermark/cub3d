@@ -6,11 +6,12 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/09 17:58:45 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/10 12:08:36 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <GLFW/glfw3.h>
 
 void	test(t_cub3d *cub3d)
 {
@@ -140,37 +141,8 @@ void	test(t_cub3d *cub3d)
 	}
 }
 
-// static void	debug(t_cub3d *cub3d)
-// {
-// 	printf("texture 0  : '%s'\n", cub3d->map.textures[0]);
-// 	printf("texture 1  : '%s'\n", cub3d->map.textures[1]);
-// 	printf("texture 2  : '%s'\n", cub3d->map.textures[2]);
-// 	printf("texture 3  : '%s'\n", cub3d->map.textures[3]);
-// 	printf("color C    : '0x%X'\n", cub3d->map.ceiling);
-// 	printf("color F    : '0x%X'\n", cub3d->map.floor);
-// 	printf("map width  : %d \n", cub3d->map.dimensions.x);
-// 	printf("map height : %d \n", cub3d->map.dimensions.y);
-
-// 	printf("map        : ");
-// 	for (int i = 0; i < cub3d->map.dimensions.x + 2; i++)
-// 		printf("-");
-// 	printf("\n");
-// 	for (int i = 0; i < cub3d->map.dimensions.y; i++)
-// 		printf("           : |%s|\n", cub3d->map.map[i]);
-// 	printf("           : ");
-// 	for (int i = 0; i < cub3d->map.dimensions.x + 2; i++)
-// 		printf("-");
-// 	printf("\n");
-
-// 	mlx_image_to_window(cub3d->mlx, cub3d->background, 0, 0);
-// 	mlx_image_to_window(cub3d->mlx, cub3d->foreground, 0, 0);
-// 	mlx_loop_hook(cub3d->mlx, &new_move, cub3d);
-// 	mlx_loop(cub3d->mlx);
-// }
-
 void	init_plane_speed(t_cub3d *cub3d)
 {
-	mlx_set_mouse_pos(cub3d->mlx, WIDTH / 2, HEIGHT / 2);
 	cub3d->player.mouse.x = WIDTH / 2;
 	cub3d->plane.x = 0;
 	cub3d->plane.y = 0.66;
