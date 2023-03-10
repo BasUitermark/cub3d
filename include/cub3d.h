@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/09 18:55:01 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/10 17:17:07 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ typedef struct s_ipos
 	int				y;
 }					t_ipos;
 
-typedef struct s_dpos
-{
-	double			x;
-	double			y;
-}					t_dpos;
+// typedef struct s_dpos
+// {
+// 	double			x;
+// 	double			y;
+// }					t_dpos;
 
 typedef struct s_player
 {
@@ -46,6 +46,9 @@ typedef struct s_player
 	t_dpos			direction;
 	t_dpos			plane;
 	t_ipos			mouse;
+	t_ipos			mouse_new;
+	t_dpos			input_range;
+	t_dpos			output_range;
 }					t_player;
 
 typedef struct s_map
@@ -78,6 +81,7 @@ typedef struct s_cub3d
 	mlx_texture_t	*textures[4];
 	mlx_image_t		*background;
 	mlx_image_t		*foreground;
+	mlx_image_t		*mini_map;
 	t_player		player;
 	t_dpos			plane;
 	double			movSpeed;

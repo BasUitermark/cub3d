@@ -6,11 +6,12 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/10 12:30:26 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/10 17:17:52 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <GLFW/glfw3.h>
 
 static void	draw_line(t_ray *ray, mlx_image_t *image, \
 	mlx_texture_t *texture, int w)
@@ -57,6 +58,19 @@ void	test(t_cub3d *cub3d)
 		index++;
 	}
 	mlx_image_to_window(cub3d->mlx, cub3d->foreground, 0, 0);
+}
+
+void	init_plane_speed(t_cub3d *cub3d)
+{
+	mlx_set_cursor_mode(cub3d->mlx, 0x00034002);
+	cub3d->plane.x = 0;
+	cub3d->plane.y = 0.66;
+	cub3d->movSpeed = 0.045;
+	cub3d->rotSpeed = 0.05;
+	cub3d->player.input_range.x = 0;
+	cub3d->player.input_range.y = 1000;
+	cub3d->player.output_range.x = 0.025;
+	cub3d->player.output_range.y = 0.5;
 }
 
 int	main(const int argc, const char *argv[])

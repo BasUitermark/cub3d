@@ -49,7 +49,6 @@ SRC			:= $(addprefix src/, $(addsuffix .c, \
 OBJ 		:= $(subst src, obj, $(SRC:.c=.o))
 
 default: mkdir all
-	@git submodule update --init --recursive
 
 $(TARGET): $(OBJ)
 	@$(CC) $(OBJ) $(CFLAGS) $(LIBFT) $(MLX) $(HDR_PATH) $(HEADERS) $(LFLAGS) -o $(TARGET)
