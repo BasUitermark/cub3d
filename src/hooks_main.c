@@ -6,7 +6,7 @@
 /*   By: buiterma <buiterma@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/04 16:55:03 by buiterma      #+#    #+#                 */
-/*   Updated: 2023/03/10 12:08:46 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/10 16:13:57 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	new_move(void *param)
 		execute_strafe(cub3d, player);
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_LEFT) || \
 		mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT) || \
-		x != player->mouse.x)
+		x != player->mouse_new.x)
 		execute_pan(cub3d, player);
 	test(cub3d);
 }
