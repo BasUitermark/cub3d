@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/10 12:08:36 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/10 12:39:49 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void	test(t_cub3d *cub3d)
 
 void	init_plane_speed(t_cub3d *cub3d)
 {
+	mlx_set_cursor_mode(cub3d->mlx, 0x00034002);
 	cub3d->player.mouse.x = WIDTH / 2;
 	cub3d->plane.x = 0;
 	cub3d->plane.y = 0.66;
