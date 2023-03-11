@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/10 12:30:26 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/11 14:36:49 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,17 @@ void	test(t_cub3d *cub3d)
 	mlx_image_to_window(cub3d->mlx, cub3d->foreground, 0, 0);
 }
 
+void	init_plane_speed(t_cub3d *cub3d)
+{
+	mlx_set_cursor_mode(cub3d->mlx, 0x00034002);
+	cub3d->mov_speed = 0.04;
+	cub3d->rot_speed = 0.05;
+	cub3d->player.input_range.x = 0;
+	cub3d->player.input_range.y = 1000;
+	cub3d->player.output_range.x = 0.015;
+	cub3d->player.output_range.y = 0.5;
+}
+
 int	main(const int argc, const char *argv[])
 {
 	t_cub3d		cub3d;
@@ -72,8 +83,7 @@ int	main(const int argc, const char *argv[])
 		!load_textures(&cub3d) || \
 		!setup(&cub3d))
 		return (cleanup(&cub3d, EXIT_FAILURE));
-	cub3d.movSpeed = 0.045;
-	cub3d.rotSpeed = 0.05;
+	init_plane_speed(&cub3d);
 	mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0);
 	mlx_loop_hook(cub3d.mlx, &new_move, &cub3d);
 	mlx_loop(cub3d.mlx);

@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/11 13:02:03 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/11 14:08:30 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ typedef struct s_ipos
 	int				y;
 }					t_ipos;
 
-typedef struct s_dpos
-{
-	double			x;
-	double			y;
-}					t_dpos;
+// typedef struct s_dpos
+// {
+// 	double			x;
+// 	double			y;
+// }					t_dpos;
 
 typedef struct s_player
 {
@@ -44,6 +44,9 @@ typedef struct s_player
 	t_dpos			direction;
 	t_dpos			plane;
 	t_ipos			mouse;
+	t_ipos			mouse_new;
+	t_dpos			input_range;
+	t_dpos			output_range;
 }					t_player;
 
 typedef struct s_map
@@ -78,8 +81,8 @@ typedef struct s_cub3d
 	mlx_image_t		*foreground;
 	t_player		player;
 	t_dpos			plane;
-	double			movSpeed;
-	double			rotSpeed;
+	double			mov_speed;
+	double			rot_speed;
 }					t_cub3d;
 
 // error.c
@@ -120,7 +123,7 @@ void	new_move(void *param);
  * @param player 
  */
 bool	is_valid_location(double x, double y, t_cub3d *cub3d);
-bool	is_valid_location_new(double x, double y, t_cub3d *cub3d);
+bool	is_valid_location(double x, double y, t_cub3d *cub3d);
 
 void	execute_strafe(t_cub3d *cub3d, t_player *player);
 void	execute_pan(t_cub3d *cub3d, t_player *player);
