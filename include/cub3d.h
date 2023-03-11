@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/10 17:17:07 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/11 12:46:08 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 
 # define WIDTH 	1920
 # define HEIGHT 1080
-// # define WIDTH 	854
-// # define HEIGHT 480
 
 typedef struct s_ipos
 {
