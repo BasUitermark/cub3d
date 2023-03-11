@@ -82,9 +82,10 @@ int	main(const int argc, const char *argv[])
 		!setup(&cub3d))
 		return (cleanup(&cub3d, EXIT_FAILURE));
 	init_plane_speed(&cub3d);
-	mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0);
-	mlx_image_to_window(cub3d.mlx, cub3d.foreground, 0, 0);
-	mlx_loop_hook(cub3d.mlx, &new_move, &cub3d);
+	if (mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0) < 0 || \
+		mlx_image_to_window(cub3d.mlx, cub3d.foreground, 0, 0) < 0 || \
+		mlx_loop_hook(cub3d.mlx, &new_move, &cub3d) == false)
+		return (cleanup(&cub3d, EXIT_FAILURE));
 	mlx_loop(cub3d.mlx);
 	return (cleanup(&cub3d, EXIT_SUCCESS));
 }
