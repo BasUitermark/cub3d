@@ -47,8 +47,7 @@ void	test(t_cub3d *cub3d)
 	t_ray	ray;
 	int		index;
 
-	mlx_delete_image(cub3d->mlx, cub3d->foreground);
-	cub3d->foreground = mlx_new_image(cub3d->mlx, WIDTH, HEIGHT);
+	ft_memset(cub3d->foreground->pixels, 0, HEIGHT * WIDTH * sizeof(int));
 	index = 0;
 	while (index < WIDTH)
 	{
@@ -56,7 +55,6 @@ void	test(t_cub3d *cub3d)
 		draw_line(&ray, cub3d->foreground, cub3d->textures[ray.side], index);
 		index++;
 	}
-	mlx_image_to_window(cub3d->mlx, cub3d->foreground, 0, 0);
 }
 
 void	init_plane_speed(t_cub3d *cub3d)
@@ -85,6 +83,7 @@ int	main(const int argc, const char *argv[])
 		return (cleanup(&cub3d, EXIT_FAILURE));
 	init_plane_speed(&cub3d);
 	mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0);
+	mlx_image_to_window(cub3d.mlx, cub3d.foreground, 0, 0);
 	mlx_loop_hook(cub3d.mlx, &new_move, &cub3d);
 	mlx_loop(cub3d.mlx);
 	return (cleanup(&cub3d, EXIT_SUCCESS));
