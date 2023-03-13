@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/11 20:18:23 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/13 15:28:31 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	draw_line(t_ray *ray, mlx_image_t *image, \
 	if (heights.y > HEIGHT)
 		oc.x = (heights.y - HEIGHT) / 2;
 	heights.x = ray->line.y - ray->line.x;
-	if (heights.x >= HEIGHT)
-		heights.x = HEIGHT - 1;
+	if (heights.x > HEIGHT)
+		heights.x = HEIGHT;
 	pixel_location.x = (int)((texture->width) * ray->wall_x);
 	index = 0;
 	while (index < heights.x)
