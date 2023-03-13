@@ -1,6 +1,6 @@
 # tool macros
 CC			:= cc
-CFLAGS		:= -Wall -Werror -Wextra -fsanitize=address
+CFLAGS		:= -Wall -Werror -Wextra
 COBJFLAGS	:= $(CFLAGS) $(LFLAGS)
 
 # path macros
