@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:44:10 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/14 15:50:58 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/15 11:55:25 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**read_map(const char *map)
 			return (NULL);
 		fd_and_r[1] = read(fd_and_r[0], buffer, 31);
 	}
-	if (!validate_raw_map(raw))
+	if (!raw || !raw[0] || !validate_raw_map(raw))
 		return (false);
 	ret = ft_split(raw, '\n');
 	free(raw);
