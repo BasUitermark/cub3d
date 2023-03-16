@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/14 16:19:06 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/16 13:26:15 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		perr(const char *error, int ret);
 // utility_array.c
 int		array_len(char **array);
 int		array_free(char **array);
+bool	check_if_there_are_two_commas(char *str);
 
 // utility_map.c
 char	**read_map(const char *map);

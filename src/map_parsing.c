@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:45:58 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/04 21:51:03 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/16 13:26:40 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static bool	parse_color(int *res, char *rgb)
 {
 	char	**sep;
 
-	if (!rgb)
+	if (!rgb || !check_if_there_are_two_commas(rgb))
 		return (false);
 	sep = ft_split(rgb, ',');
 	free(rgb);
