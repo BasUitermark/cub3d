@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:44:10 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/15 11:55:25 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/16 09:40:31 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static bool	validate_raw_map(char *raw)
 	}
 	while (raw[index] && !ft_strchr(" 01NESW", raw[index]))
 		index++;
+	if (!raw[index])
+		return (false);
 	while (raw[index] && !(raw[index] == '\n' && raw[index + 1] == '\n'))
 		index++;
 	if (!raw[index])
