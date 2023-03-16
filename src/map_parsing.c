@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 14:45:58 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/16 13:26:40 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/16 14:55:02 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ bool	parse_map(t_cub3d *cub3d, const char *map)
 	cub3d->map.raw_map = read_map(map);
 	if (!cub3d->map.raw_map)
 		return (perr(BOLD "\tFailed reading map\n" RESET, false));
+	if (!check_keys(cub3d->map.raw_map))
+		return (perr(BOLD "\tInvalid map keys\n" RESET, false));
 	if (!parse_color(&cub3d->map.floor, parse_element(cub3d, "F")) || \
 		!parse_color(&cub3d->map.ceiling, parse_element(cub3d, "C")))
 		return (perr(BOLD "\tFailed parsing colors\n" RESET, false));

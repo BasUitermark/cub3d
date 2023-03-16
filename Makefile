@@ -47,6 +47,7 @@ SRC			:= $(addprefix src/, $(addsuffix .c, \
 					hooks_camera \
 					check_if_player_in_wall \
 					check_map_characters \
+					check_keys \
 					location_validating))
 OBJ 		:= $(subst src, obj, $(SRC:.c=.o))
 

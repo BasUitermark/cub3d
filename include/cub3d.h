@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/16 13:38:36 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/16 14:54:27 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,9 @@ bool	check_map_characters(t_map *map);
 
 // map_parsing.c
 bool	parse_map(t_cub3d *cub3d, const char *map);
+
+// check_keys.c
+bool	check_keys(char **raw);
 
 // map_validating.c
 bool	validate_map(t_cub3d *cub3d);
