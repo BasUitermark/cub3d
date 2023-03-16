@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/13 15:28:31 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/16 09:45:47 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	main(const int argc, const char *argv[])
 		!setup(&cub3d))
 		return (cleanup(&cub3d, EXIT_FAILURE));
 	init_plane_speed(&cub3d);
-	if (mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0) < 0 ||
+	if (mlx_image_to_window(cub3d.mlx, cub3d.background, 0, 0) < 0 || \
 		mlx_loop_hook(cub3d.mlx, &new_move, &cub3d) == false)
 		return (cleanup(&cub3d, EXIT_FAILURE));
 	mlx_loop(cub3d.mlx);
