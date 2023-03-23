@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:26:25 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/16 09:45:47 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/23 12:15:12 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(const int argc, const char *argv[])
 
 	ft_memset(&cub3d, 0, sizeof(t_cub3d));
 	if (argc != 2)
-		return ((printf(BOLD "usage: ./cub3d <map>\n" RESET) & 0) | \
+		return ((printf(BOLD "Usage: ./cub3d <map>\n" RESET) & 0) | \
 		EXIT_FAILURE);
 	if (!parse_map(&cub3d, argv[1]) || \
 		!validate_map(&cub3d) || \

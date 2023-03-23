@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/03 12:13:45 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/03 14:46:42 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/23 12:17:12 by buiterma      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ bool	setup(t_cub3d *cub3d)
 {
 	cub3d->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
 	if (!cub3d->mlx)
-		return (perr("failed initializing mlx", false));
+		return (perr(BOLD "\tFailed initializing mlx\n" RESET, false));
 	cub3d->background = mlx_new_image(cub3d->mlx, WIDTH, HEIGHT);
 	if (!cub3d->background)
-		return (perr("failed creating background image", false));
+		return (perr(BOLD "\tFailed creating background image\n" RESET, false));
 	cub3d->foreground = mlx_new_image(cub3d->mlx, WIDTH, HEIGHT);
 	if (!cub3d->foreground)
-		return (perr("failed creating foreground image", false));
+		return (perr(BOLD "\tFailed creating foreground image\n" RESET, false));
 	set_background(cub3d->background, &cub3d->map);
 	return (true);
 }
