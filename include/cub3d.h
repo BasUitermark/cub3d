@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/01 13:35:13 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/16 14:54:27 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/23 13:44:51 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_cub3d
 }					t_cub3d;
 
 // check_if_player_in_wall.c
+bool	check_if_zero_in_wall(t_map *map);
 bool	check_if_player_in_wall(t_map *map, t_player *player);
 
 // error.c

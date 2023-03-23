@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:28:19 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/23 12:16:25 by buiterma      ########   odam.nl         */
+/*   Updated: 2023/03/23 13:45:08 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ bool	validate_map(t_cub3d *cub3d)
 		return (perr(BOLD "\tInvalid amount of players\n" RESET, false));
 	if (!check_structure(cub3d) || \
 		!check_if_player_in_wall(&cub3d->map, &cub3d->player) || \
+		!check_if_zero_in_wall(&cub3d->map) || \
 		!check_map_characters(&cub3d->map))
 		return (perr(BOLD "\tIllegal map\n" RESET, false));
 	return (true);
