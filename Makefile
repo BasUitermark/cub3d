@@ -46,8 +46,6 @@ SRC			:= $(addprefix src/, $(addsuffix .c, \
 					hooks_strafe \
 					hooks_camera \
 					check_if_player_in_wall \
-					check_map_characters \
-					check_keys \
 					location_validating))
 OBJ 		:= $(subst src, obj, $(SRC:.c=.o))
 
@@ -68,7 +66,7 @@ submodule:
 	@git submodule update --init --recursive
 	@git submodule update --remote --merge
 	@$(MAKE) -C libs/libft
-
+	@cd libs/MLX42; cmake -B build; cmake --build build -j4
 mkdir:
 	@mkdir -p $(BIN_PATH) $(OBJ_PATH)
 
