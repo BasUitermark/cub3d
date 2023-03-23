@@ -6,7 +6,7 @@
 /*   By: jde-groo <jde-groo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/16 13:36:16 by jde-groo      #+#    #+#                 */
-/*   Updated: 2023/03/16 13:40:33 by jde-groo      ########   odam.nl         */
+/*   Updated: 2023/03/23 10:52:09 by jde-groo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ bool	check_map_characters(t_map *map)
 		{
 			if (!ft_strchr(" 01NESW", map->map[y][x]))
 				return (false);
-			printf("%d, %d \n", map->dimensions.x, x);
 			x++;
 		}
 		y++;
